@@ -18,9 +18,9 @@ jobs:
           with:
             aws_access_key: ${{ secrets.AWS_ADMIN_ACCESS_KEY_ID }}
             aws_secret_key: ${{ secrets.AWS_ADMIN_SECRET_ACCESS_KEY_ID }}
-            application_name: Abhyaz-React
-            environment_name: Abhyaz-React-env
+            application_name: react_application
+            environment_name: Reactapplication-env
             version_label: ${{ github.sha }}
-            existing_bucket_name: elasticbeanstalk-ap-south-1-356303048610
-            region: ap-south-1
+            existing_bucket_name: elasticbeanstalk-us-east-1-957368471202
+            region: us-east-1
             deployment_package: deploy.zip
