@@ -24,3 +24,4 @@ jobs:
             existing_bucket_name: elasticbeanstalk-us-east-1-957368471202
             region: us-east-1
             deployment_package: deploy.zip
+# adding new lines
