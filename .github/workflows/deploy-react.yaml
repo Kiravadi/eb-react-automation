@@ -3,29 +3,28 @@ name: Deploy to AWS Elastic Beanstalk
 on:
   push:
     branches:
-      - master  # Change this to your main branch name
+      - master  # Adjust branch name as needed
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v2
-
+        
+      - name: Build Docker Image
+        run: |
+          docker build -t my-react-app .
+        
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1  # Change to your desired AWS region
-
-      - name: Install EB CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install python3-pip -y
-          pip3 install awsebcli --upgrade --user
-
+          aws-region: us-east-1  # Specify your AWS region
+      
       - name: Deploy to Elastic Beanstalk
         run: |
-          eb deploy Reactapplication-env --staged
+          aws elasticbeanstalk create-application-version --application-name "react_application" --version-label $GITHUB_SHA --source-bundle S3Bucket="elasticbeanstalk-us-east-1-957368471202",S3Key="$GITHUB_SHA.zip"  # Replace with your S3 bucket and application name
+          aws elasticbeanstalk update-environment --application-name "react_application" --environment-name "Reactapplication-env" --version-label $GITHUB_SHA  # Replace with your environment name
